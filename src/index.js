@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './00_demo/06_阶段练习'
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./05_react实现slot/App";
+import "./05_react实现slot/style.css";
 
-ReactDOM.render(<App/>, document.getElementById('root'));
-
+ReactDOM.render(<App />, document.getElementById("root"));
