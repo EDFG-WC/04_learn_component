@@ -10,18 +10,19 @@ export default class App extends Component {
   }
 
   render() {
+    const { nickname, level } = this.state;
     return (
       <div>
-        <Profile></Profile>
+        <Profile nickname={nickname} level={level}></Profile>
       </div>
     );
   }
 }
 
-function Profile() {
+function Profile(props) {
   return (
     <div>
-      <ProfileHeader />
+      <ProfileHeader nickname={props.nickname} level={props.level} />
       <ul>
         <li>设置1</li>
         <li>设置2</li>
