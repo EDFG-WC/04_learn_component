@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 
-// 使用Context进行跨组件通信, 这里创建的2个属性都是默认值. 保证在引用错误的情况下显示值.
+// 多个context进行嵌套, 我们有必要知道.
 const UserContext = React.createContext({
   nickname: '托塔天王',
   level: 18,
+});
+
+const ThemeContext = React.createContext({
+  color: 'red',
 });
 
 export default class App extends Component {
@@ -16,11 +20,12 @@ export default class App extends Component {
   }
 
   render() {
-    //const { nickname, level } = this.state;
     return (
       <div>
         <UserContext.Provider value={this.state}>
-          <Profile />
+          <ThemeContext.Provider value={{ color: 'bule' }}>
+            <Profile />
+          </ThemeContext.Provider>
         </UserContext.Provider>
         <UserContext.Provider value={this.state}></UserContext.Provider>
         <Profile />
@@ -43,21 +48,24 @@ function Profile(props) {
   );
 }
 
-// 3.和上一个例子不同的是, 只有类组件才有Context对象.
 function ProfileHeader() {
   return (
     <UserContext.Consumer>
       {(value) => {
         return (
-          <div>
-            <h2>用户昵称: {value.nickname}</h2>
-            <h2>用户等级: {value.level}</h2>
-          </div>
+          <ThemeContext>
+            {(theme) => {
+              return (
+                <div>
+                  <h2>用户昵称: {value.nickname}</h2>
+                  <h2>用户等级: {value.level}</h2>
+                  <h2>颜色: {theme.color}</h2>
+                </div>
+              );
+            }}
+          </ThemeContext>
         );
       }}
     </UserContext.Consumer>
   );
 }
-
-// 2.把创建的UserContext赋值给ProfilerHeader组件
-ProfileHeader.contextType = UserContext;
