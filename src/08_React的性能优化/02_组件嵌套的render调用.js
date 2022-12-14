@@ -22,6 +22,7 @@ export default class App extends Component {
     );
   }
 
+  // 只要执行这个方法, 就会重新执行render方法, 整个组件都会被重新执行.
   increment() {
     this.setState({
       counter: this.state.counter + 1,
