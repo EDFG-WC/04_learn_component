@@ -1,6 +1,11 @@
-import React, { Component } from 'react';
+import React, { memo, PureComponent } from 'react';
 
-export default class App extends Component {
+const MemoHeader = memo(function Header() {
+  console.log('Header被调用');
+  return <h2>我是Header组件</h2>;
+});
+
+export default class App extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -17,9 +22,9 @@ export default class App extends Component {
         <h2>当前计数: {this.state.counter}</h2>
         <button onClick={(e) => this.increment()}>+1</button>
         <button onClick={(e) => this.changeText()}>改变文本</button>
-        {/*<Header />*/}
-        {/*<Main />*/}
-        {/*<Footer />*/}
+        <MemoHeader />
+        <Main />
+        <Footer />
       </div>
     );
   }
@@ -40,12 +45,12 @@ export default class App extends Component {
 
   // 默认返回true, 设置为返回false就会停止component更新
   // 有些属性需要更新, 有些属性不需要更新. 我们可以在这个方法里进行优化.
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    if (this.state.counter !== nextState.counter) {
-      return true;
-    }
-    return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState, nextContext) {
+  //   if (this.state.counter !== nextState.counter) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 }
 
 // Header
@@ -54,7 +59,7 @@ function Header() {
   return <h2>我是Header组件</h2>;
 }
 
-class Main extends Component {
+class Main extends PureComponent {
   render() {
     console.log('Main render函数被调用');
     return (
@@ -66,7 +71,7 @@ class Main extends Component {
   }
 }
 
-class Banner extends Component {
+class Banner extends PureComponent {
   render() {
     console.log('Banner render函数被调用');
     return <h3>我是Banner组件</h3>;
