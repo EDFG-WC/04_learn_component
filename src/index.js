@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './09_知识点补充/02_全局事件传递';
+import App from './10_受控和非受控组件/02_受控组件的基本使用';
 
 ReactDOM.render(<App />, document.getElementById('root'));
