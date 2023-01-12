@@ -1,7 +1,7 @@
-import React, {useState, useMemo} from 'react';
+import React, { useMemo, useState } from 'react';
 
 function calcNumber(count) {
-  console.log("calcNumber重新计算");
+  console.log('calcNumber重新计算');
   let total = 0;
   for (let i = 1; i <= count; i++) {
     total += i;
@@ -14,6 +14,7 @@ export default function MemoHookDemo01() {
   const [show, setShow] = useState(true);
 
   // const total = calcNumber(count);
+  // 只有count改变的时候calcNumber才会执行.
   const total = useMemo(() => {
     return calcNumber(count);
   }, [count]);
@@ -21,8 +22,8 @@ export default function MemoHookDemo01() {
   return (
     <div>
       <h2>计算数字的和: {total}</h2>
-      <button onClick={e => setCount(count + 1)}>+1</button>
-      <button onClick={e => setShow(!show)}>show切换</button>
+      <button onClick={(e) => setCount(count + 1)}>+1</button>
+      <button onClick={(e) => setShow(!show)}>show切换</button>
     </div>
-  )
+  );
 }
