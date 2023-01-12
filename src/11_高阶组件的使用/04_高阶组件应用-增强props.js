@@ -1,7 +1,19 @@
 import React, {createContext, PureComponent} from 'react';
 
+// 定义一个高阶组件
+function withUser(WrappedComponent) {
+  return (props) => {
+    return (
+      <UserContext.Consumer>
+        {(user) => {
+          return <WrappedComponent {...props} {...user} />;
+        }}
+      </UserContext.Consumer>
+    );
+  };
+}
 
-// 通过Context来进行增强:
+// 创建Context
 const UserContext = createContext({
   nickname: '默认',
   level: -1,
@@ -11,11 +23,9 @@ const UserContext = createContext({
 class Home extends PureComponent {
   render() {
     return (
-        <UserContext.Consumer>
-          {(user) => {
-            return <h2>Home: {`昵称: ${user.nickname} 等级: ${user.level} 区域: ${user.region}`}</h2>;
-          }}
-        </UserContext.Consumer>
+      <h2>
+        Home: {`昵称: ${this.props.nickname} 等级: ${this.props.level} 区域: ${this.props.region}`}
+      </h2>
     );
   }
 }
@@ -23,25 +33,26 @@ class Home extends PureComponent {
 class About extends PureComponent {
   render() {
     return (
-        <UserContext.Consumer>
-          {(user) => {
-            return <h2>Home: {`昵称: ${user.nickname} 等级: ${user.level} 区域: ${user.region}`}</h2>;
-          }}
-        </UserContext.Consumer>
+      <h2>
+        About: {`昵称: ${this.props.nickname} 等级: ${this.props.level} 区域: ${this.props.region}`}
+      </h2>
     );
   }
 }
 
+const UserHome = withUser(Home);
+const UserAbout = withUser(About);
+
 class App extends PureComponent {
   render() {
     return (
-        <div>
-          App
-          <UserContext.Provider value={{nickname: 'alex', level: 90, region: '加拿大'}}>
-            <Home/>
-            <About/>
-          </UserContext.Provider>
-        </div>
+      <div>
+        App
+        <UserContext.Provider value={{ nickname: 'alex', level: 90, region: '加拿大' }}>
+          <UserHome />
+          <UserAbout />
+        </UserContext.Provider>
+      </div>
     );
   }
 }
